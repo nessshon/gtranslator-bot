@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+
+  telegram-bot:
+    build:
+      context: .
+    container_name: google-translator-bot
+    command: sh -c "cd /usr/src/telegram-bot && python -m app"
+    restart: always
+    volumes:
+      - .:/usr/src/telegram-bot
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    container_name: google-translator-redis
+    restart: always
+    volumes:
+      - ./redis/data/:/data

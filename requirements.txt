@@ -1,0 +1,5 @@
+aiogram~=2.23.1
+aioredis~=2.0.1
+loguru~=0.6.0
+environs~=9.5.0
+aiogoogletrans~=3.3.3
