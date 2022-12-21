@@ -73,15 +73,15 @@ nano .env
 
 6. Copy telegram-bot.service to /lib/systemd/system/
    ```bash
-   sudo cp telegram-bot.service /lib/systemd/system/
+   sudo cp telegram-bot.service /lib/systemd/system/google-translator-bot.service
    ```
 7. Enable autostart on boot
    ```bash
-   sudo systemctl enable telegram-bot.service
+   sudo systemctl enable google-translator-bot.service
    ```
 8. Launch Bot
    ```bash
-   sudo systemctl start telegram-bot.service
+   sudo systemctl start google-translator-bot.service
    ```
 
 ### Environment variables reference
