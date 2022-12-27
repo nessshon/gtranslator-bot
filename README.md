@@ -90,4 +90,4 @@ nano .env
 |------------|------|---------------------------------------------------------|
 | BOT_TOKEN  | str  | Token, get it from [@BotFather](https://t.me/BotFather) |
 | USE_REDIS  | bool | Set to True if you are using Redis                      |
-| REDIS_HOST | str  | Set "radis" if you will be using docker                 |
+| REDIS_HOST | str  | Set "redis" if you will be using docker                 |
