@@ -3,6 +3,7 @@ import logging
 from aiogoogletrans import Translator
 
 from aiogram import Dispatcher
+from aiogram.utils.markdown import hcode
 from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery, User
 
@@ -36,7 +37,7 @@ async def translate_message(state: FSMContext,
     )
 
     if translated_text:
-        await edit_message(message, translated_text)
+        await edit_message(message, hcode(translated_text))
     if message:
         msg = await message.answer(text, reply_markup=markup)
         await state.update_data(message_id=msg.message_id)
