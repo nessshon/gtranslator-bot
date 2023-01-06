@@ -27,7 +27,9 @@ async def translate_message(state: FSMContext,
 
     translate_to = data["translate_to"]
     translate_from = data["translate_from"]
+
     language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
 
     text = Text(language_code).get("translate")
     markup = current_languages_markup(
@@ -53,6 +55,8 @@ async def choose_language(state: FSMContext,
     data = await state.get_data()
 
     language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
+
     text = Text(language_code).get("language")
     markup = choose_language_markup(language_code)
 
@@ -99,9 +103,11 @@ async def translate_message_handler(message: Message, state: FSMContext):
 async def translate_message_callback_handler(call: CallbackQuery, state: FSMContext):
     data = await state.get_data()
 
-    language_code = User.get_current().language_code
     translate_to = data["translate_to"]
     translate_from = data["translate_from"]
+
+    language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
 
     if call.data == CallbackData.CHANGE:
         await state.update_data(
@@ -122,6 +128,7 @@ async def translate_message_callback_handler(call: CallbackQuery, state: FSMCont
 @rate_limit(0.5)
 async def choose_language_callback_handler(call: CallbackQuery, state: FSMContext):
     language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
 
     if call.data == CallbackData.BACK:
         await translate_message(state, call=call)

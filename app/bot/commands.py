@@ -24,9 +24,12 @@ async def command_start(message: Message, state: FSMContext):
     await delete_message(message)
     await asyncio.sleep(2)
 
-    language_code = User.get_current().language_code
-    translate_from = "en"
     translate_to = "ru"
+    translate_from = "en"
+
+    language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
+
 
     user_link = markdown.hlink(
         title=message.from_user.first_name,
@@ -54,11 +57,14 @@ async def command_start(message: Message, state: FSMContext):
 async def command_source(message: Message, state: FSMContext):
     emoji = await message.answer("👨‍💻")
 
+    language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
+
     await delete_previous_message(message, state)
     await delete_message(message)
     await asyncio.sleep(2)
 
-    text = Text(message.from_user.language_code).get("source")
+    text = Text(language_code).get("source")
     await edit_message(emoji, text)
     await state.update_data(message_id=emoji.message_id)
 
