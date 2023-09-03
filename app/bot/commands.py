@@ -30,7 +30,6 @@ async def command_start(message: Message, state: FSMContext):
     language_code = User.get_current().language_code
     language_code = language_code if language_code == "ru" else "en"
 
-
     user_link = markdown.hlink(
         title=message.from_user.first_name,
         url=message.from_user.url
@@ -55,17 +54,26 @@ async def command_start(message: Message, state: FSMContext):
 
 @rate_limit(2)
 async def command_source(message: Message, state: FSMContext):
+    data = await state.get_data()
     emoji = await message.answer("👨‍💻")
-
-    language_code = User.get_current().language_code
-    language_code = language_code if language_code == "ru" else "en"
 
     await delete_previous_message(message, state)
     await delete_message(message)
     await asyncio.sleep(2)
 
+    translate_to = data["translate_to"]
+    translate_from = data["translate_from"]
+
+    language_code = User.get_current().language_code
+    language_code = language_code if language_code == "ru" else "en"
+
     text = Text(language_code).get("source")
-    await edit_message(emoji, text)
+    markup = current_languages_markup(
+        language_code=language_code,
+        translate_from=translate_from,
+        translate_to=translate_to
+    )
+    await edit_message(emoji, text, markup)
     await state.update_data(message_id=emoji.message_id)
 
 
